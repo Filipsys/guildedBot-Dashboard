@@ -1,0 +1,1 @@
+# Due to the limitations of the guilded.py library, this cog is not yet functional.

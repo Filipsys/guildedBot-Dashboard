@@ -1,0 +1,222 @@
+body {
+    margin: 0;
+    padding: 0;
+    font-family: "Nunito", sans-serif;
+    overflow-x: hidden;
+    background-color: #1f2025;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+.bg-svg {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+}
+
+.main-app {
+    width: 96.5%;
+    height: 100vh;
+    /* background-color: #333333; */
+    float: left;
+    color: rgb(228, 228, 228);
+}
+
+
+.info-dashboard {
+    display: flex;
+    justify-content: space-between;
+    width: 80%;
+    height: 30vh;
+}
+
+.main-info-section, .bot-info-section {
+    width: 50%;
+    margin: 30px;
+    background-color: #252525;
+    border-radius: 10px;
+}
+
+.flex-grid-info, h2 {
+    padding-left: 20px;
+}
+
+.flex-grid-info {
+    font-size: 14px;
+}
+
+h1 {
+    padding-left: 20px;
+}
+
+
+.search-div {
+    width: 80%;
+    display: flex;
+    height: auto;
+    align-items: center;
+    margin: 30px;
+    margin-left: 0;
+    border-radius: 10px;
+    background-color: #252525;
+}
+
+.search-bar {
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+}
+
+.search-bar input {
+    border: none;
+    background-color: #585454;
+    color: white;
+    border-radius: 10px;
+    flex-grow: 1;
+    padding: 10px;
+    margin: 6px;
+    margin-right: 0;
+}
+
+.search-bar input:focus {
+    outline: none;
+}
+
+.enable-all-btn, .disable-all-btn {
+    color: white;
+    border: none;
+    border-radius: 10px;
+    margin: 4px 0;
+    padding: 10px;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+}
+
+.enable-all-btn {
+    margin-left: 6px;
+    background-color: rgb(155, 172, 93);
+    border-radius: 10px 0 0 10px;
+}
+
+.disable-all-btn {
+    background-color: rgb(219, 58, 58);
+    border-radius: 0 10px 10px 0;
+    margin-right: 6px;
+}
+
+
+
+.module-section {
+    padding-left: 30px;
+    /* padding-left: 50px; */
+}
+
+.modules-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-between;
+    width: 80%;
+    height: auto;
+}
+
+.module-box {
+    width: 33%;
+    height: 150px;
+    margin-bottom: 5px;
+    background-color: #252525;
+    border-radius: 10px;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+}
+
+.module-box h2 {
+    padding: 5px;
+    padding-left: 25px;
+    padding-bottom: 0;
+    text-align: left;
+}
+
+.module-box p {
+    padding: 5px;
+    padding-left: 25px;
+    padding-top: 0;
+    margin: 0;
+    text-align: left;
+    font-size: 14px;
+}
+
+.module-box span {
+    position: absolute;
+    right: 0;
+    top: 0;
+}
+
+
+
+nav {
+    background-color: #252525;
+    color: white;
+    display: flex;
+    justify-content: center;
+    width: 3.5%;
+    height: 100vh;
+    float: left;
+}
+
+ul {
+    display: flex;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    flex-direction: column;
+
+}
+
+.nav-items {
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    height: 100%;
+}
+
+.last-ul {
+    margin-top: auto;
+}
+
+li {
+    padding-bottom: 5px;
+}
+
+.account-circle {
+    font-size: 50px !important;
+    padding-bottom: 30px !important;
+}
+
+.nav-icon {
+    font-size: 30px;
+    padding: 10px;
+    cursor: pointer;
+    user-select: none;
+    color: rgb(202, 202, 202);
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-icon:hover {
+    color: white;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.5);
+}
+
+.logout-icon {
+    transition: all 0.3s ease-in-out;
+}
+
+.logout-icon:hover {
+    color: red !important;
+}

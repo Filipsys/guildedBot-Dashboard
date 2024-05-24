@@ -1,0 +1,1248 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+
+    <link rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,200,0,0" />
+    <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/dashboard2.css">
+</head>
+
+<body>
+    <!-- <svg class="bg-svg" xmlns="http://www.w3.org/2000/svg" version="1.1" xmlns:xlink="http://www.w3.org/1999/xlink"
+        xmlns:svgjs="http://svgjs.dev/svgjs" width="100%" height="100%" opacity="0.51">
+        <defs>
+            <filter id="nnnoise-filter" x="-20%" y="-20%" width="140%" height="140%" filterUnits="objectBoundingBox"
+                primitiveUnits="userSpaceOnUse" color-interpolation-filters="linearRGB">
+                <feTurbulence type="turbulence" baseFrequency="0.057" numOctaves="4" seed="15" stitchTiles="stitch"
+                    x="0%" y="0%" width="100%" height="100%" result="turbulence"></feTurbulence>
+                <feSpecularLighting surfaceScale="20" specularConstant="0.8" specularExponent="20"
+                    lighting-color="#585858" x="0%" y="0%" width="100%" height="100%" in="turbulence"
+                    result="specularLighting">
+                    <feDistantLight azimuth="3" elevation="104"></feDistantLight>
+                </feSpecularLighting>
+                <feColorMatrix type="saturate" values="0" x="0%" y="0%" width="100%" height="100%" in="specularLighting"
+                    result="colormatrix"></feColorMatrix>
+            </filter>
+        </defs>
+        <rect width="100%" height="100%" fill="transparent"></rect>
+        <rect width="100%" height="100%" fill="#585858" filter="url(#nnnoise-filter)"></rect>
+    </svg> -->
+
+
+    <div class="main-app">
+        <div class="top-dashboard">
+            <div class="main-containers">
+                <div class="top-container-divs">
+                    <div class="server-info-container">
+                        <div class="server-info">
+                            <h2>Server Information</h2>
+
+                            <div class="main-info-box">
+                                <p>Messages sent: 33<br>Messages deleted: 22<br>Messages edited: 33<br>Mod commands
+                                    used: 12</p>
+                                <p>Members: 1<br>Categories: 1<br>Text Channels: 1<br>Voice Channels: 1<br>Roles: 1</p>
+                            </div>
+
+                            <div class="filters-div">
+                                <span class="material-symbols-outlined filters-tune">tune</span>
+
+                                <div class="one-filter">1</div>
+                                <div class="seven-filter">7</div>
+                                <div class="thirty-filter">30</div>
+                            </div>
+
+                            <span class="material-symbols-outlined settings-bg">settings</span>
+                        </div>
+                    </div>
+                    <div class="latest-updates-container">
+                        <div class="latest-updates">
+                            <h2>Latest Bot Updates</h2>
+
+                            <!-- <div class="update-box">
+                                <h3><span>03.05.2024</span> - Update 3</h3>
+                                <p>- Added new command: $help<br>- Fixed many bugs and issues with ban command.</p>
+                            </div> -->
+
+                            <script>
+                                let guildVariables = [];
+                                let miscGuildVariables = [];
+                                let allChannels = [];
+
+
+                                const settingsDataDict = {
+                                    "permissions": {
+                                        "admin_immunity": ["ADMIN_IMMUNITY", "Admin immunity", "id-setting-01"],
+                                        "inherit_guilded_permissions": ["INHERIT_GUILDED_PERMISSIONS", "Inherit Guilded permissions", "id-setting-02"],
+                                    },
+                                    "logging": {
+                                        "no_logging": ["NO_LOGGING", "No logging", "id-setting-03"],
+                                        "default_logging": ["DEFAULT_LOGGING", "Default logging", "id-setting-04"],
+                                        "advanced_logging": ["ADVANCED_LOGGING", "Advanced logging", "id-setting-05"],
+                                    },
+                                    "filters": {
+                                        "guilded_invite_checker": ["INVITE_CHECKER", "Guilded invite detection", "id-setting-06"],
+                                        "caps_checker": ["CAPS_CHECKER", "Caps detection", "id-setting-07"],
+                                        "link_checker": ["LINK_CHECKER", "Link detection", "id-setting-08"],
+                                        "safe_browsing_checker": ["SAFE_BROWSING_CHECKER", "Suspicious link detection", "id-setting-09"],
+                                        "nsfw_image_checker": ["NSFW_IMAGE_CHECKER", "NSFW image detection", "id-setting-10"],
+                                        "spam_checker": ["SPAM_CHECKER", "Spam detection", "id-setting-11"],
+                                        "emoji_spam_checker": ["EMOJI_SPAM_CHECKER", "Emoji spam detection", "id-setting-12"],
+                                        "mass_mention_checker": ["MASS_MENTION_CHECKER", "Mass mention detection", "id-setting-13"],
+                                        "new_account_checker": ["NEW_ACCOUNT_CHECKER", "New account detection", "id-setting-14"],
+                                    },
+                                    "miscellaneous": {
+                                        "advanced_customisation": ["ADVANCED_CUSTOMISATION", "Advanced customisation", "id-setting-15"],
+                                        "infraction_customisation": ["INFRACTION_CUSTOMISATION", "Infraction customisation", "id-setting-16"],
+                                    }
+                                }
+
+                                const actionsDict = {
+                                    "mute": "Muted",
+                                    "ban": "Banned",
+                                    "softban": "Softbanned",
+                                    "kick": "Kicked",
+                                    "warn": "Warned",
+                                    "unmute": "Unmuted",
+                                    "unban": "Unbanned",
+                                    "unwarn": "Unwarned",
+                                    "tempban": "Temporarily banned",
+                                    "tempmute": "Temporarily muted",
+                                }
+
+                                const switchesIDsAndDictVariables = {
+                                    "ADMIN_IMMUNITY": "id-setting-01",
+                                    "INHERIT_GUILDED_PERMISSIONS": "id-setting-02",
+                                    "NO_LOGGING": "id-setting-03",
+                                    "DEFAULT_LOGGING": "id-setting-04",
+                                    "ADVANCED_LOGGING": "id-setting-05",
+                                    "INVITE_CHECKER": "id-setting-06",
+                                    "CAPS_CHECKER": "id-setting-07",
+                                    "LINK_CHECKER": "id-setting-08",
+                                    "SAFE_BROWSING_CHECKER": "id-setting-09",
+                                    "NSFW_IMAGE_CHECKER": "id-setting-10",
+                                    "SPAM_CHECKER": "id-setting-11",
+                                    "EMOJI_SPAM_CHECKER": "id-setting-12",
+                                    "MASS_MENTION_CHECKER": "id-setting-13",
+                                    "NEW_ACCOUNT_CHECKER": "id-setting-14",
+                                    "ADVANCED_CUSTOMISATION": "id-setting-15",
+                                    "INFRACTION_CUSTOMISATION": "id-setting-16"
+                                }
+
+
+                                function createSwitchSvg(scaleFactor) {
+                                    const outerSwitchSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                                    outerSwitchSvg.classList.add("outer-switch");
+                                    outerSwitchSvg.setAttribute("width", 36 * scaleFactor + "px");
+                                    outerSwitchSvg.setAttribute("height", 26 * scaleFactor + "px");
+
+                                    const outerSwitchPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                                    outerSwitchPath.setAttribute("fill-rule", "evenodd");
+                                    outerSwitchPath.setAttribute("stroke", "rgb(171, 173, 170)");
+                                    outerSwitchPath.setAttribute("stroke-width", "2px");
+                                    outerSwitchPath.setAttribute("stroke-linecap", "round");
+                                    outerSwitchPath.setAttribute("stroke-linejoin", "miter");
+                                    outerSwitchPath.setAttribute("fill", "none");
+                                    outerSwitchPath.setAttribute("d", "M13.000,1.000 L23.000,1.000 C29.627,1.000 35.000,6.373 35.000,13.000 C35.000,19.627 29.627,25.000 23.000,25.000 L13.000,25.000 C6.373,25.000 1.000,19.627 1.000,13.000 C1.000,6.373 6.373,1.000 13.000,1.000 Z");
+                                    outerSwitchPath.setAttribute("transform", "scale(" + scaleFactor + ")");
+
+                                    outerSwitchSvg.appendChild(outerSwitchPath);
+
+                                    const innerSwitchSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                                    innerSwitchSvg.classList.add("inner-switch");
+                                    innerSwitchSvg.setAttribute("style", "transition: all 0.2s ease-in-out;");
+                                    innerSwitchSvg.setAttribute("x", 5 * scaleFactor);
+                                    innerSwitchSvg.setAttribute("y", 5 * scaleFactor);
+                                    innerSwitchSvg.setAttribute("width", 16 * scaleFactor + "px");
+                                    innerSwitchSvg.setAttribute("height", 16 * scaleFactor + "px");
+
+                                    const innerSwitchPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                                    innerSwitchPath.setAttribute("fill-rule", "evenodd");
+                                    innerSwitchPath.setAttribute("stroke", "rgb(0, 0, 0)");
+                                    innerSwitchPath.setAttribute("stroke-width", "0px");
+                                    innerSwitchPath.setAttribute("stroke-linecap", "butt");
+                                    innerSwitchPath.setAttribute("stroke-linejoin", "miter");
+                                    innerSwitchPath.setAttribute("fill", "rgb(171, 173, 170)");
+                                    innerSwitchPath.setAttribute("d", "M8.000,-0.000 C12.418,-0.000 16.000,3.582 16.000,8.000 C16.000,12.418 12.418,16.000 8.000,16.000 C3.582,16.000 -0.000,12.418 -0.000,8.000 C-0.000,3.582 3.582,-0.000 8.000,-0.000 Z");
+                                    innerSwitchPath.setAttribute("transform", "scale(" + scaleFactor + ")");
+
+                                    innerSwitchSvg.appendChild(innerSwitchPath);
+                                    outerSwitchSvg.appendChild(innerSwitchSvg);
+
+
+                                    const clickerDiv = document.createElement("div");
+                                    clickerDiv.classList.add("clicker");
+                                    clickerDiv.appendChild(outerSwitchSvg);
+
+                                    return clickerDiv;
+                                }
+
+                                function askForRecentUpdates() {
+                                    return new Promise((resolve, reject) => {
+                                        const xhr = new XMLHttpRequest();
+
+                                        xhr.open("POST", "/get_data", true);
+                                        xhr.setRequestHeader("Content-Type", "application/json");
+
+                                        xhr.onload = function () {
+                                            if (xhr.status !== 200) {
+                                                return console.error("Error: " + xhr.status);
+                                            }
+
+                                            let responseString = JSON.parse(xhr.responseText);
+
+                                            let recentUpdates = responseString["latest_bot_updates_data"];
+                                            let recentActivity = responseString["mod_command_history"];
+                                            let botInfo = responseString["bot_info"];
+                                            let dashboardTime = responseString["timer_data"][0];
+
+                                            
+                                            allChannels = JSON.parse(responseString["all_channels"].replace(/'/g, "\""));
+
+                                            guildVariables = responseString["guild_variables"].map(item => {
+                                                const key = item.split(":")[0].replace(" ", "").toUpperCase();
+                                                const value = item.split(":")[1].replace(" ", "").toUpperCase();
+
+                                                console.log(key);
+                                                console.log(value);
+
+                                                return { [key]: value };
+                                            });
+
+                                            miscGuildVariables = responseString["misc_guild_variables"].map(item => {
+                                                const key = item.split(":")[0].replace(" ", "").toUpperCase();
+                                                const value = item.split(":")[1].replace(" ", "").toUpperCase();
+
+                                                return { [key]: value };
+                                            });
+
+                                            
+
+
+                                            recentActivity.sort((a, b) => {
+                                                const [timeA, dateA] = a.timestamp.split(" ");
+                                                const [hoursA, minutesA, secondsA] = timeA.split(":");
+                                                const [dayA, monthA, yearA] = dateA.split(".");
+                                                const dateStringA = `${yearA}-${monthA}-${dayA}T${hoursA}:${minutesA}:${secondsA}`;
+                                                const dateObjectA = new Date(dateStringA);
+
+                                                const [timeB, dateB] = b.timestamp.split(" ");
+                                                const [hoursB, minutesB, secondsB] = timeB.split(":");
+                                                const [dayB, monthB, yearB] = dateB.split(".");
+                                                const dateStringB = `${yearB}-${monthB}-${dayB}T${hoursB}:${minutesB}:${secondsB}`;
+                                                const dateObjectB = new Date(dateStringB);
+
+                                                return dateObjectB - dateObjectA;
+                                            });
+
+                                            recentUpdates.forEach(element => {
+                                                let updateBox = document.createElement("div");
+                                                updateBox.classList.add("update-box");
+
+                                                let updateTitle = document.createElement("h3");
+                                                updateTitle.innerHTML = `<span>${element.update_date}</span> - ${element.update_title}`;
+
+                                                let updateDescription = document.createElement("p");
+                                                updateDescription.innerHTML = element.update_description;
+
+                                                updateBox.appendChild(updateTitle);
+                                                updateBox.appendChild(updateDescription);
+
+                                                document.querySelector(".latest-updates").appendChild(updateBox);
+                                            });
+
+                                            recentActivity.forEach(element => {
+                                                let activityBox = document.createElement("div");
+                                                activityBox.classList.add("activity-box");
+
+                                                let profilePictureContainer = document.createElement("div");
+                                                profilePictureContainer.classList.add("profile-picture-container");
+
+                                                let profilePicture = document.createElement("img");
+                                                profilePicture.style.height = "52px";
+                                                profilePicture.style.width = "52px";
+                                                profilePicture.style.borderRadius = "50%";
+                                                profilePicture.classList.add("profile-picture");
+                                                // profilePicture.style.backgroundColor = "darkgray";
+                                                profilePicture.src = `${element.executor_profile_picture_url}`;
+
+                                                profilePictureContainer.appendChild(profilePicture);
+
+                                                let infoContainer = document.createElement("div");
+                                                infoContainer.classList.add("info-container");
+
+                                                let topInfoContainer = document.createElement("div");
+                                                topInfoContainer.classList.add("top-info-container");
+
+                                                let timeSpan = document.createElement("span");
+                                                timeSpan.classList.add("time-span");
+                                                timeSpan.innerHTML = element.timestamp;
+
+                                                let modRole = document.createElement("span");
+                                                modRole.classList.add("mod-role");
+                                                modRole.classList.add(element.executor_role);
+                                                modRole.innerHTML = element.executor_id;
+
+                                                let username = document.createElement("p");
+                                                username.innerHTML = `${timeSpan.outerHTML}${modRole.outerHTML}${element.executor_name}`;
+
+                                                topInfoContainer.appendChild(username);
+
+                                                let mainInfoContainer = document.createElement("div");
+                                                mainInfoContainer.classList.add("main-info-container");
+
+                                                let actionDescription = document.createElement("p");
+
+
+                                                let actionDone = actionsDict[element.action];
+
+                                                let additionalInfo = "";
+                                                if (element.additional_info !== null) {
+                                                    additionalInfo = ` (${element.additional_info})`;
+                                                }
+
+                                                if (element.reason === null) {
+                                                    actionDescription.innerHTML = `${actionDone} ${element.target_name}.${additionalInfo}`;
+                                                } else {
+                                                    actionDescription.innerHTML = `${actionDone} ${element.target_name}. Reason: "${element.reason}"${additionalInfo}`;
+                                                }
+
+                                                mainInfoContainer.appendChild(actionDescription);
+
+                                                infoContainer.appendChild(topInfoContainer);
+                                                infoContainer.appendChild(mainInfoContainer);
+
+                                                activityBox.appendChild(profilePictureContainer);
+                                                activityBox.appendChild(infoContainer);
+
+                                                document.querySelector(".recent-activity").appendChild(activityBox);
+                                            });
+
+                                            const botVersionSpan = document.querySelector(".bot-version-span");
+                                            const botUptimeSpan = document.querySelector(".bot-uptime-span");
+                                            const botServersSpan = document.querySelector(".bot-servers-span");
+
+                                            botVersionSpan.innerHTML = botInfo[0]["bot_version"];
+                                            botUptimeSpan.innerHTML = botInfo[0]["bot_uptime"];
+                                            botServersSpan.innerHTML = botInfo[0]["guild_count"];
+
+                                            // ================================
+
+                                            const dashboardTimer = document.querySelector(".dashboard-timer");
+
+                                            let timeLeft = dashboardTime["session_time_left"];
+
+                                            console.log(responseString["timer_data"]);
+                                            console.log(dashboardTime["session_time_left"]);
+
+                                            let [timeLeftMinutes, timeLeftSeconds] = timeLeft.split(":").map(Number);
+                                            let totalTimeLeftSeconds = timeLeftMinutes * 60 + timeLeftSeconds;
+
+                                            timeLeftMinutes = Math.floor(totalTimeLeftSeconds / 60);
+                                            // timeLeftSeconds = totalTimeLeftSeconds % 60;
+
+                                            // timeLeftString = `00:${timeLeftMinutes}:${timeLeftSeconds < 10 ? "0" + timeLeftSeconds : timeLeftSeconds}`;
+                                            let timeLeftString = `${timeLeftMinutes} minutes`;
+
+                                            dashboardTimer.innerHTML = timeLeftString;
+                                            dashboardTimer.style.fontSize = "2.3rem";
+
+
+                                            let timerInterval = setInterval(() => {
+                                                totalTimeLeftSeconds--;
+
+                                                let timeLeftMinutes = Math.floor(totalTimeLeftSeconds / 60);
+
+                                                // let timeLeftSeconds = totalTimeLeftSeconds % 60;
+                                                // let timeLeftString = `00:${timeLeftMinutes}:${timeLeftSeconds < 10 ? "0" + timeLeftSeconds : timeLeftSeconds}`;
+
+                                                let timeLeftString = "";
+
+                                                if (Math.round(parseInt(timeLeftMinutes)) == 1) {
+                                                    timeLeftString = `${timeLeftMinutes} minute`;
+                                                } else if (Math.round(parseInt(timeLeftMinutes)) == 0) {
+                                                    timeLeftString = `Less than a minute`;
+                                                    dashboardTimer.style.fontSize = "2rem";
+                                                    dashboardTimer.style.lineHeight = "0.9";
+                                                } else {
+                                                    timeLeftString = `${timeLeftMinutes} minutes`;
+                                                }
+
+                                                dashboardTimer.innerHTML = timeLeftString;
+
+                                                if (totalTimeLeftSeconds <= 0) {
+                                                    window.location.href = "/login";
+
+                                                    clearInterval(timerInterval);
+                                                }
+                                            }, 1000);
+
+                                            resolve([allChannels, guildVariables, miscGuildVariables]);
+                                        };
+
+                                        xhr.send();
+                                    });
+                                }
+
+
+
+                                // =============================
+                                // Document loaded ]============
+                                // =============================
+
+                                document.addEventListener("DOMContentLoaded", async () => {
+                                    let lastSettingChoice = "";
+
+                                    try {
+                                        const recievedData = await askForRecentUpdates();
+                                        console.log("Document loaded.");
+
+
+                                        let [allChannelsNew, guildVariables, miscGuildVariables] = recievedData;
+
+                                        console.log("Data recieved.");
+                                        console.log([allChannelsNew, guildVariables, miscGuildVariables]);
+
+                                        document.querySelector(".settings-section-button").addEventListener("click", () => {
+                                            const settingsDivContainer = document.createElement("div");
+                                            settingsDivContainer.classList.add("settings-div-container");
+
+                                            const settingsMainDiv = document.createElement("div");
+                                            settingsMainDiv.classList.add("settings-div");
+
+
+                                            const settingsMainSection = document.createElement("div");
+                                            settingsMainSection.classList.add("settings-main-section");
+                                            settingsMainDiv.appendChild(settingsMainSection);
+
+                                            const settingsMainSectionTitle = document.createElement("h2");
+                                            settingsMainSectionTitle.textContent = "Settings configuration";
+                                            settingsMainSection.appendChild(settingsMainSectionTitle);
+
+
+                                            const configSection = document.createElement("div");
+                                            configSection.classList.add("config-section");
+                                            settingsMainDiv.appendChild(configSection);
+
+                                            const configSectionTitle = document.createElement("h2");
+                                            configSectionTitle.textContent = "Configuration";
+                                            configSection.appendChild(configSectionTitle);
+
+                                            const configSectionMain = document.createElement("div");
+                                            configSectionMain.classList.add("config-section-main");
+                                            configSection.appendChild(configSectionMain);
+
+                                            const configSectionMainDivContainer = document.createElement("div");
+                                            configSectionMainDivContainer.classList.add("config-section-main-div-container");
+                                            configSectionMain.appendChild(configSectionMainDivContainer);
+
+                                            // const HTMLCode = "<div class=\"main-config-settings\"><div class=\"private-responses-checkbox\"></div><p>Private moderation command responses</p></div><div class=\"delete-commands-after-execute-checkbox\"></div><p>Delete moderation commands on execution</p></div><div class=\"select-many-config-settings\"></div>";
+
+                                            // configSectionMainDivContainer.innerHTML = HTMLCode;
+
+                                            function fillConfigContainer() {
+                                                // const configLayout = {
+                                                //     "main-config-settings": [{"checkbox": "private-responses-checkbox", "text": "Private moderation command responses"}, {"checkbox": "delete-commands-after-execute-checkbox", "text": "Delete moderation commands on execution"}, ],
+                                                // }
+
+                                                const mainConfigSettings = document.createElement("div");
+                                                mainConfigSettings.classList.add("main-config-settings");
+
+                                                configSectionMainDivContainer.appendChild(mainConfigSettings);
+
+
+                                                const configLayout = [
+                                                    ["Logging Type", "The type of logging that will be used", "  Logging type"],
+                                                    ["Logging Channel", "Bot logs will be sent to this channel", "  Logs channel"],
+                                                    ["Muted Role", "Users will be given this role when muted", "  Muted role"],
+                                                    ["Protected Roles", "Roles that will be immune to filters and moderation", "  Protected roles"],
+                                                    ["Whitelisted Channels", "Channels that won't be checked by the bot for moderation", "  Whitelisted channels"],
+                                                    ["Lockdown Channels", "Channels that will be locked down when using the lockdown command", "  Lockdown channels"]
+                                                ]
+
+                                                for (let i = 1; i <= configLayout.length; i++) {
+                                                    const mainConfigSettingsDiv = document.createElement("div");
+                                                    mainConfigSettingsDiv.classList.add("main-config-settings-div");
+                                                    
+                                                    const mainConfigSettingsLabelDiv = document.createElement("div");
+                                                    mainConfigSettingsLabelDiv.classList.add("main-config-settings-label");
+                                                    const mainConfigSettingsLabel = document.createElement("p");
+                                                    mainConfigSettingsLabel.textContent = configLayout[i - 1][0];
+                                                    mainConfigSettingsLabelDiv.appendChild(mainConfigSettingsLabel);
+
+                                                    const mainConfigSettingsInputDiv = document.createElement("div");
+                                                    mainConfigSettingsInputDiv.classList.add("main-config-settings-input");
+                                                    const mainConfigSettingsInput = document.createElement("select");
+                                                    mainConfigSettingsInput.classList.add("main-config-settings-input-div");
+                                                    // const mainCongfigSettingsInputArrowDiv = document.createElement("div");
+                                                    // mainCongfigSettingsInputArrowDiv.classList.add("main-config-settings-input-div-arrow");
+                                                    const mainConfigSettingsInputArrow = document.createElement("span");
+                                                    mainConfigSettingsInputArrow.classList.add("material-symbols-outlined");
+                                                    mainConfigSettingsInputArrow.classList.add("arrow-drop-down");
+                                                    mainConfigSettingsInputArrow.innerHTML = "arrow_drop_down";
+
+                                                    // const selectManyConfigSettings = document.createElement("div");
+                                                    // selectManyConfigSettings.classList.add("select-many-config-settings");
+                                                    // selectManyConfigSettings.style.display = "none";
+
+                                                    // mainConfigSettingsInputArrow.addEventListener("click", () => {
+                                                    //     const selectManyConfigSettings = document.querySelector(".select-many-config-settings");
+
+                                                    // <option value="" disabled selected>Select Logging Type</option>
+
+                                                    const mainChannelOption = document.createElement("option");
+                                                    mainChannelOption.value = "";
+                                                    mainChannelOption.textContent = "Select Logging Type";
+                                                    mainChannelOption.disabled = true;
+                                                    mainChannelOption.selected = true;
+                                                    mainConfigSettingsInput.appendChild(mainChannelOption);
+
+
+                                                    allChannelsNew.forEach(channel => {
+                                                        const channelOption = document.createElement("option");
+                                                        channelOption.value = channel["channel_id"];
+                                                        channelOption.textContent = channel["channel_name"];
+
+                                                        mainConfigSettingsInput.appendChild(channelOption);
+                                                    });
+
+                                                    // mainConfigSettingsInputDiv.appendChild(mainCongfigSettingsInputArrowDiv);
+                                                    // mainConfigSettingsInputDiv.appendChild(selectManyConfigSettings);
+                                                    mainConfigSettingsInputDiv.appendChild(mainConfigSettingsInputArrow);
+                                                    mainConfigSettingsInputDiv.appendChild(mainConfigSettingsInput);
+
+                                                    // mainConfigSettingsInput.setAttribute("placeholder", configLayout[i - 1][2]);
+
+
+                                                    const mainConfigSettingsDescriptionDiv = document.createElement("div");
+                                                    mainConfigSettingsDescriptionDiv.classList.add("main-config-settings-description");
+                                                    const mainConfigSettingsDescription = document.createElement("p");
+                                                    mainConfigSettingsDescription.textContent = configLayout[i - 1][1];
+                                                    mainConfigSettingsDescriptionDiv.appendChild(mainConfigSettingsDescription);
+
+                                                    mainConfigSettingsDiv.appendChild(mainConfigSettingsLabelDiv);
+                                                    mainConfigSettingsDiv.appendChild(mainConfigSettingsInputDiv);
+                                                    mainConfigSettingsDiv.appendChild(mainConfigSettingsDescriptionDiv);
+
+                                                    mainConfigSettings.appendChild(mainConfigSettingsDiv);
+                                                }
+
+                                                const checkboxesLayout = [
+                                                    ["private-responses-checkbox", "Private moderation command responses"],
+                                                    ["delete-commands-after-execute-checkbox", "Delete moderation commands on execution"],
+                                                    ["temp-id-checkbox-01", "Temp ID checkbox 01"],
+                                                    ["temp-id-checkbox-02", "Temp ID checkbox 02"]
+                                                ]
+
+                                                // const checkboxOuterSvg = '<svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="24px" height="24px"><path fill-rule="evenodd"  stroke="rgb(171, 173, 170)" stroke-width="2px" stroke-linecap="round" stroke-linejoin="miter" fill="none" d="M7.000,1.000 L19.000,1.000 C22.314,1.000 25.000,3.686 25.000,7.000 L25.000,19.000 C25.000,22.314 22.314,25.000 19.000,25.000 L7.000,25.000 C3.686,25.000 1.000,22.314 1.000,19.000 L1.000,7.000 C1.000,3.686 3.686,1.000 7.000,1.000 Z"/></svg>';
+                                                // const checkboxInnerSvg = '<svg  xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="16px" height="16px"><path fill-rule="evenodd"  stroke="rgb(171, 173, 170)" stroke-width="2px" stroke-linecap="round" stroke-linejoin="miter" fill="rgb(171, 173, 170)" d="M5.006,1.005 L13.006,1.005 C15.215,1.005 17.006,2.796 17.006,5.005 L17.006,13.005 C17.006,15.214 15.215,17.005 13.006,17.005 L5.006,17.005 C2.797,17.005 1.006,15.214 1.006,13.005 L1.006,5.005 C1.006,2.796 2.797,1.005 5.006,1.005 Z"/></svg>'
+
+                                                function createCheckboxSvg(scaleFactor) {
+                                                    const outerCheckboxSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                                                    outerCheckboxSvg.classList.add("outer-checkbox");
+                                                    outerCheckboxSvg.setAttribute("width", 26 * scaleFactor + "px");
+                                                    outerCheckboxSvg.setAttribute("height", 26 * scaleFactor + "px");
+
+                                                    const outerCheckboxPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                                                    outerCheckboxPath.setAttribute("fill-rule", "evenodd");
+                                                    outerCheckboxPath.setAttribute("stroke", "rgb(171, 173, 170)");
+                                                    outerCheckboxPath.setAttribute("stroke-width", "2px");
+                                                    outerCheckboxPath.setAttribute("stroke-linecap", "round");
+                                                    outerCheckboxPath.setAttribute("stroke-linejoin", "miter");
+                                                    outerCheckboxPath.setAttribute("fill", "none");
+                                                    outerCheckboxPath.setAttribute("d", "M7.000,1.000 L19.000,1.000 C22.314,1.000 25.000,3.686 25.000,7.000 L25.000,18.538 C25.000,21.852 22.314,24.538 19.000,24.538 L7.000,24.538 C3.686,24.538 1.000,21.852 1.000,18.538 L1.000,7.000 C1.000,3.686 3.686,1.000 7.000,1.000 Z");
+                                                    outerCheckboxPath.setAttribute("transform", "scale(" + scaleFactor + ")");
+
+                                                    outerCheckboxSvg.appendChild(outerCheckboxPath);
+
+                                                    const innerCheckboxSvg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                                                    innerCheckboxSvg.classList.add("inner-checkbox");
+                                                    innerCheckboxSvg.setAttribute("style", "transition: all 0.2s ease-in-out;");
+                                                    innerCheckboxSvg.setAttribute("x", 4 * scaleFactor);
+                                                    innerCheckboxSvg.setAttribute("y", 4 * scaleFactor);
+                                                    innerCheckboxSvg.setAttribute("width", 18 * scaleFactor + "px");
+                                                    innerCheckboxSvg.setAttribute("height", 18 * scaleFactor + "px");
+
+                                                    const innerCheckboxPath = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                                                    innerCheckboxPath.setAttribute("fill-rule", "evenodd");
+                                                    innerCheckboxPath.setAttribute("stroke", "rgb(0, 0, 0)");
+                                                    innerCheckboxPath.setAttribute("stroke-width", "0px");
+                                                    innerCheckboxPath.setAttribute("stroke-linecap", "butt");
+                                                    innerCheckboxPath.setAttribute("stroke-linejoin", "miter");
+                                                    innerCheckboxPath.setAttribute("fill", "rgb(171, 173, 170)");
+                                                    innerCheckboxPath.setAttribute("d", "M5.006,1.005 L13.006,1.005 C15.215,1.005 17.006,2.796 17.006,5.005 L17.006,13.005 C17.006,15.214 15.215,17.005 13.006,17.005 L5.006,17.005 C2.797,17.005 1.006,15.214 1.006,13.005 L1.006,5.005 C1.006,2.796 2.797,1.005 5.006,1.005 Z");
+                                                    innerCheckboxPath.setAttribute("transform", "scale(" + scaleFactor + ")");
+                                                    
+                                                    innerCheckboxSvg.appendChild(innerCheckboxPath);
+                                                    outerCheckboxSvg.appendChild(innerCheckboxSvg);
+
+                                                    return outerCheckboxSvg;
+                                                }
+
+
+                                                const checkboxesSettingsConfig = document.createElement("div");
+                                                checkboxesSettingsConfig.classList.add("checkboxes-settings-config");
+                                                const checkboxesSettingsConfigDiv = document.createElement("div");
+                                                checkboxesSettingsConfigDiv.classList.add("checkboxes-div");
+
+                                                const checkboxesGrid = document.createElement("div");
+                                                checkboxesGrid.classList.add("checkboxes-grid");
+
+                                                for (let i = 1; i <= checkboxesLayout.length; i++) {
+                                                    const checkboxDiv = document.createElement("div");
+                                                    checkboxDiv.classList.add("checkbox-div", "center-content");
+
+                                                    if (i == 1 || i == 2) {
+                                                        checkboxDiv.style.paddingBottom = "0";
+                                                    } else {
+                                                        checkboxDiv.style.paddingTop = "0";
+                                                    }
+
+                                                    // const checkboxInput = document.createElement("input");
+                                                    // checkboxInput.setAttribute("type", "checkbox");
+                                                    // checkboxInput.setAttribute("id", checkboxesLayout[i - 1][0]);
+
+                                                    const checkboxInput = createCheckboxSvg(0.55);
+                                                    checkboxInput.setAttribute("id", checkboxesLayout[i - 1][0]);
+
+                                                    const guildVariablesConvertedDict = {
+                                                        "PRIVATE_RESPONSES": "ENABLED",
+                                                        "DELETE_COMMANDS_AFTER_EXECUTE": "ENABLED",
+                                                        "MODERATION_ALERTS": "ENABLED",
+                                                        "TEMP_ID_CHECKBOX_02": "ENABLED"
+                                                    }
+
+                                                    function setInitialState(settingSwitch, isEnabled) {
+                                                        const settingsCheckboxCircle = settingSwitch.querySelector(".inner-checkbox");
+                                                        const opacityValue = isEnabled ? "0" : "1";
+
+                                                        settingSwitch.classList.toggle("ON-STATE-CHECKBOX", isEnabled);
+                                                        settingsCheckboxCircle.style.opacity = `${opacityValue}`;
+                                                    }
+
+                                                    const isEnabled = guildVariablesConvertedDict[switchesIDsAndDictVariables[checkboxesLayout[i - 1][0]]] === "ENABLED";
+
+                                                    setInitialState(checkboxInput, isEnabled);
+
+                                                    checkboxInput.addEventListener("click", () => {
+                                                        const settingsCheckboxCircle = checkboxInput.querySelector(".inner-checkbox");
+                                                        const isCurrentlyEnabled = checkboxInput.classList.contains("ON-STATE-CHECKBOX");
+                                                        const newOpacityValue = isCurrentlyEnabled ? "1" : "0";
+
+                                                        lastSettingChoice = checkboxesLayout[i - 1][0];
+
+                                                        checkboxInput.classList.toggle("ON-STATE-CHECKBOX");
+                                                        settingsCheckboxCircle.style.opacity = `${newOpacityValue}`;
+
+
+                                                        const xhr2 = new XMLHttpRequest();
+
+                                                        xhr2.open("POST", "/update_guild_variables", true);
+                                                        xhr2.setRequestHeader("Content-Type", "application/json");
+
+                                                        xhr2.onload = function () {
+                                                            if (xhr2.status !== 200) {
+                                                                return console.error("Error: " + xhr2.status);
+                                                            }
+
+                                                            console.log("Guild variables updated.");
+                                                        };
+
+                                                        xhr2.send(JSON.stringify({
+                                                            "setting": switchesIDsAndDictVariables[checkboxesLayout[i - 1][0]],
+                                                            "value": isCurrentlyEnabled ? "DISABLED" : "ENABLED"
+                                                        }));
+                                                    });
+
+                                                    const checkboxLabel = document.createElement("label");
+                                                    checkboxLabel.setAttribute("for", checkboxesLayout[i - 1][0]);
+                                                    checkboxLabel.textContent = checkboxesLayout[i - 1][1];
+
+                                                    checkboxDiv.appendChild(checkboxInput);
+                                                    checkboxDiv.appendChild(checkboxLabel);
+
+                                                    checkboxesGrid.appendChild(checkboxDiv);
+                                                }
+
+                                                checkboxesSettingsConfigDiv.appendChild(checkboxesGrid);
+
+
+                                                checkboxesSettingsConfig.appendChild(checkboxesSettingsConfigDiv);
+                                                configSectionMainDivContainer.appendChild(checkboxesSettingsConfig);
+                                            }
+
+                                            fillConfigContainer();
+
+
+                                            const tabCloseButton = document.createElement("span");
+                                            tabCloseButton.classList.add("material-symbols-outlined");
+                                            tabCloseButton.classList.add("close-tab-button");
+                                            tabCloseButton.innerHTML = "close";
+
+                                            tabCloseButton.addEventListener("click", () => {
+                                                settingsDivContainer.remove();
+                                            });
+
+
+
+                                            for (const category in settingsDataDict) {
+                                                const categoryDiv = document.createElement("div");
+                                                categoryDiv.classList.add("setting-category");
+
+                                                console.log("Category:");
+                                                console.log(category);
+
+                                                const titleDiv = document.createElement("div");
+                                                titleDiv.classList.add("category-title");
+                                                titleDiv.textContent = category;
+                                                categoryDiv.appendChild(titleDiv);
+
+                                                const settingsDiv = document.createElement("div");
+                                                settingsDiv.classList.add("category-settings");
+
+
+                                                console.log("////////");
+
+
+                                                for (const settingKey in settingsDataDict[category]) {
+                                                    const setting = settingsDataDict[category][settingKey];
+                                                    const settingDiv = document.createElement("div");
+                                                    settingDiv.classList.add("separate-setting");
+
+                                                    const settingNameDiv = document.createElement("div");
+                                                    settingNameDiv.textContent = setting[1];
+
+
+
+                                                    // =============================
+                                                    // Add the switch SVG ]=========
+                                                    // =============================
+
+                                                    const settingSwitch = createSwitchSvg(0.55);
+                                                    settingSwitch.setAttribute("id", setting[2]);
+
+
+                                                    // =============================
+                                                    // Create the switch ]==========
+                                                    // =============================
+
+                                                    const guildVariablesConvertedDict = guildVariables.reduce((acc, obj) => {
+                                                        const key = Object.keys(obj)[0];
+                                                        const value = obj[key];
+
+                                                        acc[key] = value;
+
+                                                        return acc;
+                                                    }, {});
+
+
+                                                    // console.log("Setting:");
+                                                    // console.log(settingsDataDict[category][settingKey][0]);
+                                                    // console.log(guildVariablesConvertedDict);
+                                                    // console.log(guildVariablesConvertedDict[settingsDataDict[category][settingKey][0]]);
+
+                                                    // const SETTINGS_OPTIONS = {
+                                                    //     "GUILDED_INVITE_CHECKER": {
+                                                    //         "title": "Guilded invite detection",
+                                                    //         "description": "If enabled, the bot will delete messages containing Guilded invites.",
+                                                    //         "selectboxes": {
+                                                                
+                                                    //         },
+                                                    //         "inputboxes": {
+                                                                
+                                                    //         },
+                                                    //         "checkboxes": {
+
+                                                    //         }
+                                                    //     },
+                                                    //     "CAPS_CHECKER": {
+                                                    //         "description": "Caps detection. If enabled, the bot will delete messages containing too many capital letters.",
+                                                    //         "selectboxes": {
+                                                                
+                                                    //         },
+                                                    //         "inputboxes": {
+                                                    //             "percentage": {
+                                                    //                 "title": "Percentage of capital letters",
+                                                    //                 "description": "The percentage of the message that can be in capital letters.",
+                                                    //                 "default_value": "60"
+                                                    //             }
+                                                    //         },
+                                                    //         "checkboxes": {
+                                                                
+                                                    //         }
+                                                    //     },
+                                                    // }
+
+
+
+                                                    function setInitialState(settingSwitch, isEnabled) {
+                                                        const settingsSwitchCircle = settingSwitch.querySelector(".inner-switch");
+                                                        const translateXValue = isEnabled ? "5px" : "0px";
+                                                        settingSwitch.classList.toggle("ON-STATE", isEnabled);
+                                                        settingsSwitchCircle.style.transform = `translateX(${translateXValue})`;
+                                                        console.log(`Setting is ${isEnabled ? "enabled" : "disabled"}.`);
+                                                    }
+
+                                                    const isEnabled = guildVariablesConvertedDict[settingsDataDict[category][settingKey][0]] === "ENABLED";
+                                                    setInitialState(settingSwitch, isEnabled);
+
+                                                    settingSwitch.addEventListener("click", () => {
+                                                        const settingsSwitchCircle = settingSwitch.querySelector(".inner-switch");
+                                                        const isCurrentlyEnabled = settingSwitch.classList.contains("ON-STATE");
+                                                        const newTranslateXValue = isCurrentlyEnabled ? "0px" : "5px";
+
+                                                        lastSettingChoice = settingsDataDict[category][settingKey][0];
+                                                        
+
+                                                        settingSwitch.classList.toggle("ON-STATE");
+                                                        settingsSwitchCircle.style.transform = `translateX(${newTranslateXValue})`;
+
+                                                        console.log(`Setting is now ${isCurrentlyEnabled ? "disabled" : "enabled"}.`);
+
+                                                        const xhr2 = new XMLHttpRequest();
+
+                                                        xhr2.open("POST", "/update_guild_variables", true);
+                                                        xhr2.setRequestHeader("Content-Type", "application/json");
+
+                                                        xhr2.onload = function () {
+                                                            if (xhr2.status !== 200) {
+                                                                return console.error("Error: " + xhr2.status);
+                                                            }
+
+                                                            console.log("Guild variables updated.");
+                                                        };
+
+                                                        xhr2.send(JSON.stringify({
+                                                            "setting": settingsDataDict[category][settingKey][0],
+                                                            "value": isCurrentlyEnabled ? "DISABLED" : "ENABLED"
+                                                        }));
+                                                    });
+
+
+                                                    settingDiv.appendChild(settingSwitch);
+                                                    settingDiv.appendChild(settingNameDiv);
+
+                                                    settingsDiv.appendChild(settingDiv);
+                                                }
+
+                                                categoryDiv.appendChild(settingsDiv);
+                                                settingsMainSection.appendChild(categoryDiv);
+                                            }
+
+                                            settingsMainDiv.appendChild(tabCloseButton);
+                                            settingsDivContainer.appendChild(settingsMainDiv);
+
+                                            document.body.appendChild(settingsDivContainer);
+
+
+
+
+
+
+                                            console.log(guildVariables);
+
+                                            const keys = [];
+                                            for (const item of guildVariables) {
+                                                const key = Object.keys(item)[0];
+                                                keys.push(key);
+                                            }
+
+                                            const values = [];
+                                            for (const item of guildVariables) {
+                                                const value = Object.values(item)[0];
+                                                values.push(value);
+                                            }
+
+                                            const tempDict = {
+                                                "ENABLED": "toggle_on",
+                                                "DISABLED": "toggle_off"
+                                            };
+
+                                            for (const key in guildVariables) {
+                                                console.log(switchesIDsAndDictVariables[keys[key]]);
+                                                console.log(values[key]);
+
+                                                const switchElement = document.getElementById(switchesIDsAndDictVariables[keys[key]]);
+
+                                                if (values[key] === "ENABLED") {
+                                                    // change the svg to toggle_on
+
+                                                    // switchElement.querySelector(".inner-switch").setAttribute("fill", "rgb(171, 173, 170)");
+                                                } else {
+                                                    // change the svg to toggle_off
+
+                                                    // switchElement.querySelector(".inner-switch").setAttribute("fill", "rgb(0, 0, 0)");
+                                                }
+                                            }
+                                        });
+
+                                    } catch (error) {
+                                        console.error(error);
+                                    }
+                                });
+                            </script>
+
+                            <span class="material-symbols-outlined settings-bg"
+                                style="transform: rotateZ(0deg);">cloud_upload</span>
+                        </div>
+                    </div>
+                </div>
+                <div class="recent-activity-container">
+                    <div class="recent-activity">
+                        <h2>Recent Server Activity</h2>
+
+                        <!-- <div class="activity-box">
+                            <div class="profile-picture-container">
+                                <div style="height: 52px; width: 52px; border-radius: 50%; background-color: beige;">
+                                </div>
+                            </div>
+
+                            <div class="info-container">
+                                <div class="top-info-container">
+                                    <p><span class="time-span">12:36</span><span
+                                            class="mod-role blue-role">Moderator</span>UsernameGuy74574747</p>
+                                </div>
+
+                                <div class="main-info-container">
+                                    <p>Moderator banned User123. Reason: "Spamming." Lorem ipsum dolor sit amet
+                                        consectetur adipisicing elit. Nisi repudiandae quod natus nemo aliquam, et rem
+                                        incidunt aut consequuntur, rerum culpa perferendis non doloribus adipisci
+                                        suscipit. Porro molestiae laudantium obcaecati quae, asperiores ex totam!
+                                        Ratione odio facere excepturi iusto nulla, doloremque, in officia, officiis ipsa
+                                        voluptas recusandae fuga itaque nesciunt!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-box">
+                            <div class="profile-picture-container">
+                                <div style="height: 52px; width: 52px; border-radius: 50%; background-color: beige;">
+                                </div>
+                            </div>
+
+                            <div class="info-container">
+                                <div class="top-info-container">
+                                    <p><span class="time-span">12:36</span><span
+                                            class="mod-role orange-role">Moderator</span>UsernameGuy74574747</p>
+                                </div>
+
+                                <div class="main-info-container">
+                                    <p>Moderator banned User123. Reason: "Spamming."</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-box">
+                            <div class="profile-picture-container">
+                                <div style="height: 52px; width: 52px; border-radius: 50%; background-color: beige;">
+                                </div>
+                            </div>
+
+                            <div class="info-container">
+                                <div class="top-info-container">
+                                    <p><span class="time-span">12:36</span><span
+                                            class="mod-role blue-role">Moderator</span>UsernameGuy74574747</p>
+                                </div>
+
+                                <div class="main-info-container">
+                                    <p>Moderator banned User123. Reason: "Spamming." Lorem ipsum dolor sit amet
+                                        consectetur adipisicing elit. Nisi repudiandae quod natus nemo aliquam, et rem
+                                        incidunt aut consequuntur, rerum culpa perferendis non doloribus adipisci
+                                        suscipit. Porro molestiae laudantium obcaecati quae, asperiores ex totam!
+                                        Ratione odio facere excepturi iusto nulla, doloremque, in officia, officiis ipsa
+                                        voluptas recusandae fuga itaque nesciunt!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-box">
+                            <div class="profile-picture-container">
+                                <div style="height: 52px; width: 52px; border-radius: 50%; background-color: beige;">
+                                </div>
+                            </div>
+
+                            <div class="info-container">
+                                <div class="top-info-container">
+                                    <p><span class="time-span">12:36</span><span
+                                            class="mod-role blue-role">Moderator</span>UsernameGuy74574747</p>
+                                </div>
+
+                                <div class="main-info-container">
+                                    <p>Moderator banned User123. Reason: "Spamming." Lorem ipsum dolor sit amet
+                                        consectetur adipisicing elit. Nisi repudiandae quod natus nemo aliquam, et rem
+                                        incidunt aut consequuntur, rerum culpa perferendis non doloribus adipisci
+                                        suscipit. Porro molestiae laudantium obcaecati quae, asperiores ex totam!
+                                        Ratione odio facere excepturi iusto nulla, doloremque, in officia, officiis ipsa
+                                        voluptas recusandae fuga itaque nesciunt!</p>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="activity-box">
+                            <div class="profile-picture-container">
+                                <div style="height: 52px; width: 52px; border-radius: 50%; background-color: beige;">
+                                </div>
+                            </div>
+
+                            <div class="info-container">
+                                <div class="top-info-container">
+                                    <p><span class="time-span">12:36</span><span
+                                            class="mod-role red-role">Moderator</span>UsernameGuy74574747</p>
+                                </div>
+
+                                <div class="main-info-container">
+                                    <p>Moderator banned User123. Reason: "Spamming."</p>
+                                </div>
+                            </div>
+                        </div> -->
+                    </div>
+                </div>
+            </div>
+
+
+
+
+            <!-- <svg class="outer-switch" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="36px" height="26px">
+                <path fill-rule="evenodd" stroke="rgb(171, 173, 170)" stroke-width="2px" stroke-linecap="round"
+                    stroke-linejoin="miter" fill="none"
+                    d="M13.000,1.000 L23.000,1.000 C29.627,1.000 35.000,6.373 35.000,13.000 C35.000,19.627 29.627,25.000 23.000,25.000 L13.000,25.000 C6.373,25.000 1.000,19.627 1.000,13.000 C1.000,6.373 6.373,1.000 13.000,1.000 Z" />
+            
+                <svg class="inner-switch" style="transition: all 0.2s ease-in-out;" x="5" y="5" width="16px" height="16px">
+                    <path fill-rule="evenodd" stroke="rgb(0, 0, 0)" stroke-width="0px" stroke-linecap="butt"
+                        stroke-linejoin="miter" fill="rgb(171, 173, 170)"
+                        d="M8.000,-0.000 C12.418,-0.000 16.000,3.582 16.000,8.000 C16.000,12.418 12.418,16.000 8.000,16.000 C3.582,16.000 -0.000,12.418 -0.000,8.000 C-0.000,3.582 3.582,-0.000 8.000,-0.000 Z" />
+                </svg>
+            </svg> -->
+
+
+            <div class="bot-container">
+                <div class="bot-div">
+                    <div class="img-container">
+                        <img src="/static/images/smallbotbanner.png" alt="boticon">
+                    </div>
+
+                    <img class="botimgp" src="/static/images/boticon.png" alt="botpfp">
+                    <!--  -->
+                    <p class="prefix-p">Bot prefix: <code>$</code></p>
+
+                    <div class="bot-body">
+                        <div class="profilecard">
+                            <h2>Simple Moderation <span>BOT</span></h2>
+
+                            <p class="commands-p"><code>$help</code> <code>$tutorial</code> <code>$settings</code>
+                            </p>
+
+                            <p>A Moderation bot with all the essential moderation tools, striving for victory!</p>
+
+                            <hr class="bot-par-line">
+
+                            <p>Use <code>$help</code> in Guilded to check all the available commands and
+                                <code>$tutorial</code> to learn to use the bot.
+                            </p>
+                        </div>
+                    </div>
+                    <div class="bottom-bot-info">
+                        <p><span class="bold-span">Bot version:</span> <span class="bot-version-span"></span><br><span
+                                class="bold-span">Bot uptime:</span> <span class="bot-uptime-span"></span><br><span
+                                class="bold-span">Curently in:</span> <span class="bot-servers-span"></span> servers</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="module-search-div">
+            <div class="search-bar">
+                <input type="text" placeholder="Search for a module">
+
+                <div class="switch-all-modules-btn"><a style="text-decoration: none;" class="material-symbols-outlined nav-icon undo-icon" href="/">power_settings_new</a></div>
+            </div>
+        </div>
+
+        <div class="modules-list-div">
+            <div class="modules-list">
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+                    
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <h1>Simple Moderation Bot Dashboard</h1>
+
+        <div class="info-dashboard">
+            <div class="main-info-section">
+                <h2>Server information [ID: xxxxxxx]</h2>
+
+                <div class="flex-grid-info">
+                    <p><b>Members:</b> 1</p>
+                    <p><b>Categories:</b> 1</p>
+                    <p><b>Text Channels:</b> 1</p>
+                    <p><b>Voice Channels:</b> 1</p>
+                    <p><b>Roles:</b> 1</p>
+                </div>
+            </div>
+            
+            <div class="bot-info-section">
+                <h2>Bot information</h2>
+                
+                <div class="flex-grid-info">
+                    <p><b>Prefix:</b> !</p>
+                    <p><b>Bot Name:</b> Simple Moderation Bot</p>
+                    <p><b>Bot Nickname:</b> SMB</p>
+                    <p><b>Bot Version:</b> 1.0.0</p>
+                    <p><b>Bot Uptime:</b> 1d 1h 1m 1s</p>
+                </div>
+            </div>
+        </div>
+
+        <div class="module-section">
+            <div class="search-div">
+                <div class="search-bar">
+                    <input type="text" placeholder="Search for a module">
+                </div>
+
+                <div class="enable-all-btn">Enable all</div>
+                <div class="disable-all-btn">Disable all</div>
+            </div>
+
+            <div class="modules-container">
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+
+                <div class="module-box">
+                    <h2>Auto Moderation</h2>
+                    <p>Customise the auto moderation settings</p>
+
+                    <span class="material-symbols-outlined nav-icon">tune</span>
+                </div>
+            </div>
+        </div> -->
+
+        <!-- <div class="dashboard-timer"></div> -->
+    </div>
+
+
+    <nav>
+        <div class="nav-container">
+            <div class="nav-items">
+                <!-- <span class="material-symbols-outlined nav-icon account-circle">account_circle</span> -->
+                <div class="dashboard-timer-container">
+                    <h4>Time left on dashboard:</h4>
+
+                    <div class="dashboard-timer"></div>
+                </div>
+
+                <ul class="nav-buttons-list">
+                    <li>
+                        <div>
+                            <div>Documentation</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div class="settings-section-button">Settings</div>
+                        </div>
+                    </li>
+                    <li>
+                        <div>
+                            <div>Support</div>
+                        </div>
+                    </li>
+                </ul>
+
+                <div class="logout-div">
+                    <div class="logout-container">
+                        <svg class="shine-logout" xmlns="http://www.w3.org/2000/svg"
+                            xmlns:xlink="http://www.w3.org/1999/xlink" width="350px" height="350px">
+                            <path fill-rule="evenodd" stroke="rgb(0, 0, 0)" stroke-width="0px" stroke-linecap="butt"
+                                stroke-linejoin="miter" fill="rgb(255, 255, 255)"
+                                d="M6.470,300.977 L300.977,6.470 C308.788,-1.341 321.451,-1.341 329.261,6.470 L343.530,20.739 C351.341,28.549 351.341,41.212 343.530,49.023 L49.023,343.530 C41.212,351.341 28.549,351.341 20.739,343.530 L6.470,329.261 C-1.341,321.451 -1.341,308.788 6.470,300.977 Z" />
+                        </svg>
+
+                        <h3>Logout</h3>
+
+                        <!-- <span class="material-symbols-outlined nav-icon logout-icon">logout</span> -->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <script src="{{ url_for('static', filename = 'js/dashboard.js') }}"></script>
+</body>
+
+</html>
