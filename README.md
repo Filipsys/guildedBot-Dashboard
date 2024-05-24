@@ -1,1 +1,1 @@
-# guildedBot-Dashboard
+# guildedBot & Dashboard
